@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+let args = process.argv.splice(2);
+let [site, url, type] = args;
+global.window = global;
+require('../dist/common');
+
+let parser = require(`../dist/${site}`);
+
+parser.getDefinitions(url, (err, data) => {
+  if (err) {
+    console.log(err);
+  } else {
+    if (type === 'multi') {
+      console.log(JSON.stringify(data.multiVideoDefintions, null, 4));
+    } else {
+      console.log(JSON.stringify(data.singleVideoDefintions, null, 4));
+    }
+  }
+});
